@@ -279,6 +279,7 @@ const translations = {
 export default function App() {
   const [lang, setLang] = useState<'en' | 'zh'>('en');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showWeChatQR, setShowWeChatQR] = useState(false);
   const t = translations[lang];
 
   const toggleLang = () => setLang(prev => prev === 'en' ? 'zh' : 'en');
@@ -619,10 +620,32 @@ export default function App() {
             <p className="text-lg text-brand-body max-w-2xl mb-12">
               {t.contact.desc}
             </p>
-            <div className="flex gap-8 mb-12">
+            <div className="flex gap-8 mb-12 items-center">
               <a href="https://wa.me/12265809045" target="_blank" rel="noopener noreferrer" className="w-16 h-16 rounded-full bg-brand-bg flex items-center justify-center hover:bg-green-500 hover:text-white transition-all shadow-sm">
                 <MessageCircle className="w-8 h-8" />
               </a>
+              {lang === 'zh' && (
+                <div className="relative">
+                  <button 
+                    onClick={() => setShowWeChatQR(!showWeChatQR)}
+                    className="w-16 h-16 rounded-full bg-brand-bg flex items-center justify-center hover:bg-[#07C160] hover:text-white transition-all shadow-sm cursor-pointer"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8.225 3.85c-4.125 0-7.475 2.925-7.475 6.525 0 2.05 1.075 3.9 2.775 5.15l-.7 2.575 2.65-1.375c.25.05.5.075.75.075 4.125 0 7.475-2.925 7.475-6.525 0-3.6-3.35-6.425-7.475-6.425zm2.525 3.95c.425 0 .75.325.75.75s-.325.75-.75.75-.75-.325-.75-.75.325-.75.75-.75zm-5.05 0c.425 0 .75.325.75.75s-.325.75-.75.75-.75-.325-.75-.75.325-.75.75-.75zm11.6 4.725c-3.45 0-6.25 2.45-6.25 5.45 0 1.725.9 3.25 2.325 4.3l-.575 2.15 2.2-1.15c.2.05.425.075.625.075 3.45 0 6.25-2.45 6.25-5.45s-2.825-5.375-6.575-5.375zm2.1 3.3c.35 0 .625.275.625.625s-.275.625-.625.625-.625-.275-.625-.625.275-.625.625-.625zm-4.2 0c.35 0 .625.275.625.625s-.275.625-.625.625-.625-.275-.625-.625.275-.625.625-.625z"/>
+                    </svg>
+                  </button>
+                  {showWeChatQR && (
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 p-4 bg-white rounded-2xl shadow-2xl border border-brand-line z-50 w-48"
+                    >
+                      <img src="/images/wechat-qr.jpg" alt="WeChat QR Code" className="w-full h-auto rounded-lg" referrerPolicy="no-referrer" />
+                      <p className="mt-2 text-xs text-brand-muted font-bold">扫码添加微信</p>
+                    </motion.div>
+                  )}
+                </div>
+              )}
               <a href="mailto:RSDESIGN.TO@outlook.com" className="w-16 h-16 rounded-full bg-brand-bg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all shadow-sm">
                 <Mail className="w-8 h-8" />
               </a>
